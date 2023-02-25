@@ -8,7 +8,7 @@ output "lambda_function_version" {
   value = module.function.lambda_function_version
 }
 output "lambda_function_url" {
-  value = try(module.function.lambda_function_url,"")
+  value = try(module.function.lambda_function_url, "")
 }
 output "lambda_cloudwatch_log_group_arn" {
   value = module.function.lambda_cloudwatch_log_group_arn

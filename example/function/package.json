@@ -1,0 +1,39 @@
+{
+  "name": "lambda-typescript-template",
+  "version": "0.2.0",
+  "author": "harukaxq",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "zip": "mkdir -p .zip && zip -j  .zip/code.zip .build/index.js",
+    "deploy": "run-s build zip update ",
+    "update": "dotenv cross-var 'aws lambda update-function-code --zip-file fileb://.zip/code.zip --function-name ${FUNCTION_NAME} && aws lambda wait function-updated --function-name ${FUNCTION_NAME}'",
+    "dev": "nodemon --watch src/ --ext ts --exec 'npm run deploy'",
+    "logs": "dotenv cross-var 'awslogs  get -w /aws/lambda/${FUNCTION_NAME} '",
+    "invoke": "dotenv cross-var 'aws lambda invoke --function-name ${FUNCTION_NAME} --cli-binary-format raw-in-base64-out --payload=file://events/sample.json  out.json --log-type Tail --query LogResult --output text |  base64 -d && echo `cat out.json`'",
+    "test": "jest"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.14.1",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.0.3",
+    "dotenv-cli": "^7.0.0",
+    "esbuild": "^0.17.10",
+    "eslint": "^8.34.0",
+    "jest": "29.4.3",
+    "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typedoc": "^0.23.25",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@sentry/esbuild-plugin": "^0.4.0",
+    "@sentry/integrations": "^7.38.0",
+    "@sentry/serverless": "^7.38.0"
+  }
+}

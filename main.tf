@@ -5,10 +5,10 @@ terraform {
       source = "jianyuan/sentry"
     }
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
     }
     docker = {
-      source  = "kreuzwerker/docker"
+      source = "kreuzwerker/docker"
     }
   }
 }
@@ -32,7 +32,7 @@ module "function" {
 
   function_name = var.name
 
-  create_package  = var.type == "docker" ? false : true
+  create_package = var.type == "docker" ? false : true
   source_path = var.type == "docker" ? null : {
     path = var.build_path,
     commands = [
@@ -70,7 +70,7 @@ module "build" {
   source = "terraform-aws-modules/lambda/aws//modules/docker-build"
   count  = var.type == "docker" ? 1 : 0
 
-  platform = "linux/amd64"
+  platform        = "linux/amd64"
   create_ecr_repo = true
   ecr_repo        = var.name
   ecr_repo_lifecycle_policy = jsonencode({
@@ -90,13 +90,13 @@ module "build" {
     ]
   })
 
-  build_args = {
+  build_args = merge({
     "SENTRY_URL"          = var.sentry_base_url
     "SENTRY_AUTH_TOKEN"   = var.sentry_auth_token
     "SENTRY_PROJECT_NAME" = sentry_project.this.name
     "SENTRY_RELEASE"      = local.release
     "SENTRY_ORG_NAME"     = var.sentry_org_name
-  }
+  }, var.build_args)
   image_tag   = data.archive_file.zip.output_sha
   source_path = var.build_path
 }

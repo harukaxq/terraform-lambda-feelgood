@@ -43,4 +43,9 @@ variable "create_script" {
 variable "create_lambda_function_url" {
   default = false
 }
-  
+
+
+
+variable "build_args" {
+  default = {}
+}
