@@ -3,12 +3,14 @@ terraform {
   required_providers {
     sentry = {
       source = "jianyuan/sentry"
+      version = ">=0.12.0"
     }
     aws = {
       source = "hashicorp/aws"
     }
     docker = {
       source = "kreuzwerker/docker"
+      version = ">=2.25.0"
     }
   }
 }
