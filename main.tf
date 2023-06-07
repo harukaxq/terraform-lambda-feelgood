@@ -3,15 +3,15 @@ terraform {
   required_providers {
     sentry = {
       source = "jianyuan/sentry"
-      version = ">=0.12"
+      version = "~> 0.11"
     }
     aws = {
       source = "hashicorp/aws"
-      version = "~> 4.63.0"
+      version = "~> 4.63"
     }
     docker = {
       source = "kreuzwerker/docker"
-      version = ">=3.0"
+      version = ">= 2.12, < 3.0"
     }
   }
 }
@@ -30,6 +30,7 @@ locals {
 }
 module "function" {
   source  = "terraform-aws-modules/lambda/aws"
+  version = "4.18.0"
   runtime = var.runtime
   handler = var.handler
 
@@ -71,6 +72,7 @@ module "function" {
 
 module "build" {
   source = "terraform-aws-modules/lambda/aws//modules/docker-build"
+  version = "4.18.0"
   count  = var.type == "docker" ? 1 : 0
 
   platform        = "linux/amd64"
