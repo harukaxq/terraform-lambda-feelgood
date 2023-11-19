@@ -1,17 +1,13 @@
 terraform {
-  required_version = "~> 1.3.9"
   required_providers {
     sentry = {
       source = "jianyuan/sentry"
-      version = "~> 0.11"
     }
     aws = {
       source = "hashicorp/aws"
-      version = "~> 4.63"
     }
     docker = {
       source = "kreuzwerker/docker"
-      version = ">= 2.12, < 3.0"
     }
   }
 }
