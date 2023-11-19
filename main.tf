@@ -5,6 +5,7 @@ terraform {
     }
     aws = {
       source = "hashicorp/aws"
+      # version = "~> 3.0"
     }
     docker = {
       source = "kreuzwerker/docker"
@@ -26,7 +27,7 @@ locals {
 }
 module "function" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "4.18.0"
+  version = "6.4.0"
   runtime = var.runtime
   handler = var.handler
 
