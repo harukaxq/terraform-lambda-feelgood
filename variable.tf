@@ -26,6 +26,10 @@ variable "ephemeral_storage_size" {
 variable "create_sentry_project" {
   default = true
 }
+variable "sentry_teams"{
+  default = []
+  type = list(string)
+}
 variable "sentry_auth_token" {
 }
 variable "sentry_org_name" {
